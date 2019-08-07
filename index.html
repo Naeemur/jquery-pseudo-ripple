@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>jQuery Pseudo Ripple</title>
+	<link rel="stylesheet" href="aicon/style.css">
+	<link rel="stylesheet" href="css/4grid.css">
+	<link rel="stylesheet" href="css/jquery-pseudo-ripple.css">
+	<!-- <link rel="stylesheet" href="css/"> -->
+	<style>
+	.con {
+		background: #eaeaea;
+		text-align: justify;
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+	h2.con {
+		box-sizing: border-box;
+		background: none;
+		text-align: left;
+		padding: 20px;
+		color: #0af;
+	}
+	div[class*="ripple-"] {
+		padding: 20px;
+		border-radius: 5px;
+		background: #fff;
+		margin: 10px 0px;
+	}
+	.ripple-2::after {
+		background: rgba(0,210,255,0.5);
+	}
+	.ic {
+		display: inline-block;
+		padding: 10px;
+	}
+	div[class*="ripple-"].type-trigger {
+		padding: 0;
+		overflow: hidden;
+	}
+	.type-trigger span {
+		padding: 10px;
+		display: inline-block;
+		font-size: 16px;
+		line-height: 16px;
+		vertical-align: middle;
+	}
+	</style>
+</head>
+<body style="background-color:#eee;padding:50px 0px;font:16px sans-serif;">
+	<h1 style="text-align:center;">jQuery Pseudo Ripple</h1>
+	<div style="text-align:justify;" class="con row sml-1 mid-1 lrg-4">
+		<div class="col sml-1 mid-1 lrg-2">
+			<h3>Intro</h3>
+			<p>Material ripple plugin for jQuery web applications.</p>
+			<p>Examples are given below with code snippets.</p>
+		</div>
+		<div class="col sml-1 mid-1 lrg-2">
+			<h3>Why?</h3>
+			<p>Usual ripple plugin inserts an empty div / span element to render the ripple. This may cause bugs due to the following problems -</p>
+			<ul>
+				<li>addtion of unnecessary elements in the DOM</li>
+				<li>element.innerHTML becomes different than expected when read</li>
+				<li>can not set element.innerHTML without caution</li>
+				<li>not easily append / prepend elements without causing positioning problems</li>
+				<!-- <li></li> -->
+			</ul>
+			<p>This is where this plugin shines. It uses CSS pseudo ::after element for rendering the ripple. So this keeps the DOM and innerHTML clean.</p>
+			<p>As ripples are only for design, I think it is best to do this using CSS.</p>
+		</div>
+	</div>
+	<div class="con row sml-1 mid-1 lrg-4">
+		<div class="col sml-1 mid-1 lrg-2">
+			<h2>Simple use</h2>
+			<pre><code>
+// HTML
+&lt;div class="ripple-1"&gt;Hello Ripple&lt;/div&gt;
+// JS
+$('.ripple-1').ripple()
+			</code></pre>
+		</div>
+		<div class="col sml-1 mid-1 lrg-2">
+			<h3>Result</h3>
+			<div class="ripple-1">Hello Ripple</div>
+		</div>
+	</div>
+	<div class="con row sml-1 mid-1 lrg-4">
+		<div class="col sml-1 mid-1 lrg-2">
+			<h2>Styling with CSS</h2>
+			<pre><code>
+// HTML
+&lt;div class="ripple-2"&gt;Hello Color&lt;/div&gt;
+// css
+.ripple-2::after {
+  background: rgba(0,210,255,0.5);
+}
+// JS
+$('.ripple-2').ripple()
+			</code></pre>
+		</div>
+		<div class="col sml-1 mid-1 lrg-2">
+			<h3>Result</h3>
+			<div class="ripple-2">Hello Color</div>
+		</div>
+	</div>
+	<div class="con row sml-1 mid-1 lrg-4">
+		<div class="col sml-1 mid-1 lrg-2">
+			<h2>API usage</h2>
+			<pre><code>
+// HTML
+&lt;div class="ripple-3"&gt;API usage&lt;/div&gt;
+&lt;div class="ripple-4"&gt;2x slow + on click&lt;/div&gt;
+&lt;div class="ripple-5"&gt;Centered ripple&lt;/div&gt;
+&lt;div&gt;&lt;span class="ic ic-play type-icon"&gt;&lt;/span&gt; Click icon&lt;/div&gt;
+&lt;div class="type-trigger"&gt;&lt;span class="ic ic-play"&gt;&lt;/span&gt; &lt;span&gt;Click anywhere&lt;/span&gt;&lt;/div&gt;
+// JS
+$('.ripple-3').ripple({
+  ease: 'cubic-bezier(.4,0,.2,1)',
+  duration: 2000, // default 400. could be ms in nummber or multiples of the default ('2x'|'3x'|'4x'|...|'10x')
+  onclick: false, // if false, ripples on mousedown
+  disable: false,
+  type: 'pointed', // 'centered' | 'icon' | 'trigger' | 'target'
+  size: 1, // integer upto 10. use greater than 1 for elements wihh greater height than width
+})
+$('.ripple-4').ripple({
+  duration: '2x',
+  onclick: true,
+})
+$('.ripple-5').ripple({
+  type: 'centered',
+})
+$('.type-icon').ripple({
+  type: 'icon',
+})
+$('.type-trigger').ripple({
+  type: 'trigger',// ripples in .ripple-target element inside
+})
+			</code></pre>
+		</div>
+		<div class="col sml-1 mid-1 lrg-2">
+			<h3>Result</h3>
+			<div class="ripple-3">API usage</div>
+			<div class="ripple-4">2x slow + on click</div>
+			<div class="ripple-5">Centered ripple</div>
+			<div><span class="ic ic-play type-icon"></span> Click icon</div>
+			<div class="type-trigger"><span class="ic ic-play ripple-target"></span> <span>Click anywhere</span></div>
+		</div>
+	</div>
+	<div class="con row sml-1 mid-1 lrg-4">
+		<div class="col sml-1 mid-1 lrg-2">
+			<h2>Consider compact</h2>
+			<p>If you do not plan to use multiples for duration and size other than 1, you should use <b>jquery-pseudo-ripple-compact.css</b> instead of <b>jquery-pseudo-ripple.css</b></p>
+		</div>
+	</div>
+	<script src="jQuery.min.js"></script>
+	<script src="jQuery-pseudo-ripple.js"></script>
+	<script src="jQuery-nao-ripple.js"></script>
+	<script src="jQuery-nao-input.js"></script>
+	<script>
+	$('.ripple-1').ripple()
+	$('.ripple-2').ripple()
+	$('.ripple-3').ripple({
+		ease: 'cubic-bezier(.4,0,.2,1)',
+		duration: 2000, // default 400. could be ms in nummber or multiples of the default ('2x'|'3x'|'4x'|...|'10x')
+		onclick: false, // if false, ripples on mousedown
+		disable: false,
+		type: 'pointed', // 'centered' | 'icon' | 'trigger' | 'target'
+		size: 1, // integer upto 10. use greater than 1 for elements wihh greater height than width
+	})
+	$('.ripple-4').ripple({
+		duration: '2x',
+		onclick: true,
+	})
+	$('.ripple-5').ripple({
+		type: 'centered',
+	})
+	$('.type-icon').ripple({
+		type: 'icon',
+	})
+	$('.type-trigger').ripple({
+		type: 'trigger',// ripples in .ripple-target element inside
+	})
+	</script>
+</body>
+</html>
